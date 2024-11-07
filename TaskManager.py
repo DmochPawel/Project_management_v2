@@ -8,9 +8,7 @@ init(autoreset=True)
 
 class TaskManager:
 
-    #deklaracja listy zadań w której będziemy przechowywać zadania
- 
-    #konstruktor klasy Task
+    #konstruktor klasy TaskManager
     def __init__():
        pass
 
@@ -40,20 +38,20 @@ class TaskManager:
                   Priority: {}
                   """.format(task.id, task.title, task.description, task.due_date, task.status, task.priority )) 
 
-    #funkcja wyświetlająca konkretne zadanie z listy zadań
-    def view_task():
-        id = input("Podaj ID zadania: ")
-        for task in Task.tasks:
-                if task.id == int(id):
-                    print(Fore.YELLOW +"""ID: {}
-                  Title: {}
-                  Description: {}
-                  Due date: {}
-                  Status: {}
-                  Priority: {}
-                  """.format(task.id, task.title, task.description, task.due_date, task.status, task.priority )) 
-                    return
-        print(Fore.RED +"Brak zadania o tym ID")
+    # #funkcja wyświetlająca konkretne zadanie z listy zadań
+    # def view_task():
+    #     id = input("Podaj ID zadania: ")
+    #     for task in Task.tasks:
+    #             if task.id == int(id):
+    #                 print(Fore.YELLOW +"""ID: {}
+    #               Title: {}
+    #               Description: {}
+    #               Due date: {}
+    #               Status: {}
+    #               Priority: {}
+    #               """.format(task.id, task.title, task.description, task.due_date, task.status, task.priority )) 
+    #                 return
+    #     print(Fore.RED +"Brak zadania o tym ID")
         
 
     #funkcja usuwająca konkretne zadanie z listy zadań
@@ -87,37 +85,42 @@ class TaskManager:
         
     #funkcja edytująca konkretne zadanie z listy zadań
     def edit_task():
-        id = input("Podaj ID zadania: ") 
+        while True:
+            id = input("Podaj ID zadania: ") 
+            print("\nWybór parametru")
+            print("1. Tytuł")
+            print("2. Opis")
+            print("3. Data wykonania")
+            print("4. Status")
+            print("5. Priorytet")
+            print("6. Przerwij")
 
-        print("\nWybór parametru")
-        print("1. Tytuł")
-        print("2. Opis")
-        print("3. Data wykonania")
-        print("4. Status")
-        print("5. Priorytet")
-        choice = input("wybierz opcję 1-6: ")
+            choice = input("wybierz opcję 1-6: ")
 
-        if choice == '1':
-            arg = "title"
-        elif choice == '2':
-            arg = "description"
-        elif choice == '3':
-            arg = "due_date"
-        elif choice == '4':
-            arg = "status"
-        elif choice == '5':
-            arg = "priority"
-        else:
-            print(Fore.RED +"Wybrałeś wartość spoza zakresu!")
-
-        new_value = input("Podaj nową wartość: ")
-
-        for task in Task.tasks: 
-            if task.id == int(id):
-                setattr(task, arg, new_value)
-                print("Zmieniono wartość {} zadania {} na {}".format(arg, task.id, new_value))
-                return
-        print(Fore.RED +"Brak zadania o tym ID\n")
+            if choice == '1':
+                arg = "title"
+            elif choice == '2':
+                arg = "description"
+            elif choice == '3':
+                arg = "due_date"
+            elif choice == '4':
+                arg = "status"
+            elif choice == '5':
+                arg = "priority"
+            elif choice == '6':
+                break
+            else:
+                print(Fore.RED +"Wybrałeś wartość spoza zakresu!")
+            
+            new_value = input("Podaj nową wartość: ")
+        
+            for task in Task.tasks: 
+                if task.id == int(id):
+                    setattr(task, arg, new_value)
+                    print("Zmieniono wartość {} zadania {} na {}".format(arg, task.id, new_value))
+                    return
+            
+            print(Fore.RED +"Brak zadania o tym ID\n")
 
     def load_tasks_from_csv(filename):
         with open(filename, mode = 'r', encoding='utf-8') as file:
